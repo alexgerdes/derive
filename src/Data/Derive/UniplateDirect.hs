@@ -110,7 +110,7 @@ make uni grab from to =
         (Just [InsDecl () $ InlineSig () True Nothing (qname $ if uni then "uniplate" else "biplate"), InsDecl () ms])]
     where
         headName = (UnQual () $ Ident () $ if uni then "Uniplate" else "Biplate")
-        instRule = IRule () Nothing Nothing (foldr (flip (IHApp ())) (IHCon () headName) (from : [to | not uni]))
+        instRule = IRule () Nothing Nothing (foldl (IHApp ()) (IHCon () headName) (from : [to | not uni]))
         ty = grab $ tyRoot from
         match pat bod = Match () (Ident () $ if uni then "uniplate" else "biplate") [pat] (UnGuardedRhs () bod) Nothing
         ms = if uni || from /= to
